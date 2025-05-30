@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
+// screens/LoginScreen.js
+import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-export default function LoginScreen({ onNavigateToRegister, onLoginSuccess }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-    // Simula sucesso de login
-    if (email && password) {
-      onLoginSuccess();
-    }
-  };
-
+// Mude o nome da função para LoginScreen
+export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Image
-          source={{ uri: 'https://via.placeholder.com/96' }}
+          // Adicione uma source para sua logo aqui, se tiver uma específica para login
+          source={{ uri: 'https://via.placeholder.com/96' }} // Exemplo
           style={styles.logo}
           resizeMode="cover"
         />
@@ -28,8 +21,6 @@ export default function LoginScreen({ onNavigateToRegister, onLoginSuccess }) {
           placeholderTextColor="#A38F8F"
           autoCapitalize="none"
           keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
         />
 
         <TextInput
@@ -37,18 +28,18 @@ export default function LoginScreen({ onNavigateToRegister, onLoginSuccess }) {
           placeholder="Senha"
           placeholderTextColor="#A38F8F"
           secureTextEntry
-          autoCapitalize="none"
-          value={password}
-          onChangeText={setPassword}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainApp')}> {/* Exemplo: Navegar para Home ao entrar */}
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
           Ainda não é cliente?
-          <Text style={styles.link} onPress={onNavigateToRegister}> Registrar</Text>
+          {/* Mude 'Registrar' para 'Cadastro' para corresponder ao nome da rota */}
+          <Text style={styles.link} onPress={() => navigation.navigate('Cadastro')}>
+            {' '}Registrar
+          </Text>
         </Text>
       </View>
     </View>
@@ -77,6 +68,7 @@ const styles = StyleSheet.create({
     height: 96,
     borderRadius: 24,
     marginBottom: 32,
+    backgroundColor: '#ccc', // Placeholder color se a imagem não carregar
   },
   welcomeText: {
     fontSize: 16,
@@ -91,8 +83,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#4B3B4F',
     fontSize: 14,
-    color: '#A38F8F',
+    color: '#A38F8F', // Cor do texto digitado
     marginBottom: 24,
+    paddingVertical: 8, // Adicionado para melhor toque
+    // fontVariant: ['small-caps'], // Removido se não suportado por todas as fontes/plataformas
   },
   button: {
     width: '100%',
@@ -100,12 +94,14 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingVertical: 10,
     marginTop: 16,
+    alignItems: 'center', // Garante que o texto dentro do botão esteja centralizado
   },
   buttonText: {
     color: '#fff',
     textAlign: 'center',
     fontSize: 14,
-    fontFamily: 'monospace',
+    // fontFamily: 'monospace', // Removido se não for uma fonte padrão ou importada
+    fontWeight: 'bold',
   },
   footerText: {
     marginTop: 32,
@@ -116,6 +112,7 @@ const styles = StyleSheet.create({
   link: {
     color: '#4B3B4F',
     textDecorationLine: 'underline',
-    textTransform: 'none',
+    fontWeight: 'bold', // Adicionado para destaque
+    // textTransform: 'none', // Removido pois o pai já tem uppercase, e queremos sobrescrever
   },
 });
