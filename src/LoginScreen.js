@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ onNavigateToRegister, onLoginSuccess }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    // Simula sucesso de login
+    if (email && password) {
+      onLoginSuccess();
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Image
-          
+          source={{ uri: 'https://via.placeholder.com/96' }}
           style={styles.logo}
           resizeMode="cover"
         />
@@ -18,6 +28,8 @@ export default function LoginScreen({ navigation }) {
           placeholderTextColor="#A38F8F"
           autoCapitalize="none"
           keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
         />
 
         <TextInput
@@ -25,17 +37,18 @@ export default function LoginScreen({ navigation }) {
           placeholder="Senha"
           placeholderTextColor="#A38F8F"
           secureTextEntry
+          autoCapitalize="none"
+          value={password}
+          onChangeText={setPassword}
         />
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
           Ainda não é cliente?
-          <Text style={styles.link} onPress={() => navigation.navigate('Registrar')}>
-            {' '}Registrar
-          </Text>
+          <Text style={styles.link} onPress={onNavigateToRegister}> Registrar</Text>
         </Text>
       </View>
     </View>
@@ -80,7 +93,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#A38F8F',
     marginBottom: 24,
-    fontVariant: ['small-caps'],
   },
   button: {
     width: '100%',
